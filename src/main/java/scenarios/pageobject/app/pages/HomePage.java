@@ -45,16 +45,12 @@ public class HomePage extends BasePage {
     }
 
     public void checkContact(Contact contact) {
-//        for(String element: getAllContacts()){
-//            System.out.println(element);
-//        }
-        //System.out.println(getAllContacts());
-       // System.out.println(contact.getName().trim());
         Assert.assertTrue(getAllContacts().contains(contact.getName().trim()));
     }
 
     public void openAddContactForm() {
         checkBox.click();
+       new TouchAction(driver).waitAction(WaitOptions.waitOptions(Duration.ofSeconds(5)));
         addContactButton.click();
     }
 

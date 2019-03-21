@@ -9,10 +9,11 @@ public class WebPropertyReader {
 
     private static WebPropertyReader _instance;
     public String sut;
-    public String platform;
+    public String platfoplatformName;
     public String driver;
     public String deviceName;
-    public String browser;
+    public String browserName;
+    public String chromedriverExecutable;
 
     private WebPropertyReader() throws IOException {
         init();
@@ -31,10 +32,12 @@ public class WebPropertyReader {
             property.load(fis);
 
             this.sut = property.getProperty("sut");
-            this.platform = property.getProperty("platform");
+            this.platfoplatformName = property.getProperty("platfoplatformName");
             this.driver = property.getProperty("driver");
             this.deviceName = property.getProperty("deviceName");
-            this.browser = property.getProperty("browser");
+            this.browserName = property.getProperty("browserName");
+            //for emulators only
+            this.chromedriverExecutable = property.getProperty("chromedriverExecutable");
 
         } catch (FileNotFoundException e) {
             System.err.println(e.getMessage());

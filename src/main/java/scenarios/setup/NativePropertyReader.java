@@ -8,8 +8,8 @@ import java.util.Properties;
 public class NativePropertyReader {
 
     private static NativePropertyReader _instance;
-    public String appPath;
-    public String platform;
+    public String app;
+    public String platfoplatformName;
     public String driver;
     public String deviceName;
 
@@ -30,8 +30,8 @@ public class NativePropertyReader {
             fis = new FileInputStream("src/main/resources/nativetest.properties");
             property.load(fis);
 
-            this.appPath = property.getProperty("appPath");
-            this.platform = property.getProperty("platform");
+            this.app = property.getProperty("app");
+            this.platfoplatformName = property.getProperty("platfoplatformName");
             this.driver = property.getProperty("driver");
             this.deviceName = property.getProperty("deviceName");
         } catch (FileNotFoundException e) {

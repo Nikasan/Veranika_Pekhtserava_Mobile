@@ -7,6 +7,7 @@ import org.testng.annotations.Test;
 import scenarios.pageobject.web.pages.HomePage;
 import scenarios.setup.DriverSetup;
 import scenarios.setup.HttpResponseCode;
+import scenarios.setup.WebPropertyReader;
 
 import java.io.IOException;
 
@@ -14,7 +15,7 @@ import static org.testng.Assert.assertTrue;
 import static org.testng.AssertJUnit.assertEquals;
 
 public class IanaWebTest {
-    HomePage homepage;
+    private HomePage homepage;
 
     @BeforeClass(description = "Initialisation of driver")
     public void setUp() throws IOException {
@@ -22,13 +23,13 @@ public class IanaWebTest {
     }
 
     @Test(description = "Open website")
-    public void webTest() throws IOException{
+    public void webTest() throws IOException {
         int statusCode;
         statusCode = new HttpResponseCode().httpResponseCodeViaGet("https://www.iana.org/");
-        assertEquals(200,statusCode);
+        assertEquals(200, statusCode);
 
         homepage.open();
-        DriverSetup.instance().getWait().until(ExpectedConditions.urlToBe("https://www.iana.org/"));
+        DriverSetup.instance().getWait().until(ExpectedConditions.urlToBe(WebPropertyReader.instance().sut));//"https://www.iana.org/"
         homepage.checkIsOpened();
         assertTrue(DriverSetup.instance().getWebDriver().getTitle().contains("Internet Assigned Numbers Authority"));
         System.out.println("Site opening done");

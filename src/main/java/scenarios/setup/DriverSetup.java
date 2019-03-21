@@ -8,6 +8,9 @@ import scenarios.setup.driver.WebUtils;
 
 import java.io.IOException;
 
+import static scenarios.setup.enums.capabilitiesEnums.*;
+
+
 public class DriverSetup {
     private static DriverSetup _instance = null;
     private AndroidDriver _webDriver = null;
@@ -24,11 +27,9 @@ public class DriverSetup {
     public AndroidDriver getNativeDriver() throws IOException {
         if (_nativeDriver == null) {
             DesiredCapabilities capabilities = new DesiredCapabilities();
-            capabilities.setCapability("platformName", NativePropertyReader.instance().platform);
-            //capabilities.setCapability("deviceName", "emulator-5554");
-            capabilities.setCapability("deviceName", NativePropertyReader.instance().deviceName); //9887f744574b504850
-            capabilities.setCapability("app", NativePropertyReader.instance().appPath);
-
+            capabilities.setCapability(PLATFORM.value, NativePropertyReader.instance().platfoplatformName);
+            capabilities.setCapability(DEVICE.value, NativePropertyReader.instance().deviceName);
+            capabilities.setCapability(APP.value, NativePropertyReader.instance().app);
             _nativeDriver = new AndroidDriver(NativeUtils.createUrl(), capabilities);
         }
         return _nativeDriver;
@@ -38,13 +39,16 @@ public class DriverSetup {
         if (_webDriver == null) {
             DesiredCapabilities capabilities = new DesiredCapabilities();
 
-            capabilities.setCapability("platformName", WebPropertyReader.instance().platform);
-            capabilities.setCapability("deviceName", WebPropertyReader.instance().deviceName);
-            capabilities.setCapability("browserName", WebPropertyReader.instance().browser);
+            capabilities.setCapability(PLATFORM.value, WebPropertyReader.instance().platfoplatformName);
+            capabilities.setCapability(DEVICE.value, WebPropertyReader.instance().deviceName);
+            capabilities.setCapability(BROWSER.value, WebPropertyReader.instance().browserName);
 
+            /**chromedriverExecutable capability for emulators only with Android 7.0 and Appium version 1.11.0
+             * Should be commented for real devise
+             */
+            capabilities.setCapability(CHDREXECUTABLE.value, WebPropertyReader.instance().chromedriverExecutable);
             _webDriver = new AndroidDriver(WebUtils.createUrl(), capabilities);
         }
-
         return _webDriver;
     }
 
