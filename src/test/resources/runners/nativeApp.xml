@@ -3,7 +3,7 @@
 <suite name="Native Application tests" verbose="1">
     <test name="Native Application contact manager">
         <classes>
-            <class name="scenarios.hw2.NativeTest.ContactManagerTest"/>
+            <class name="ContactManagerTest"/>
         </classes>
     </test>
 
