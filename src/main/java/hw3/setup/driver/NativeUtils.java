@@ -13,9 +13,7 @@ public class NativeUtils {
     public static URL createUrl() throws IOException {
         URL url = null;
         try {
-           // url = new URL(NativePropertyReader.instance().driver);
             url = new URL(format("http://%s:%s@%s/wd/hub", "EPM-TSTF", WebPropertyReader.instance().key, WebPropertyReader.instance().hub));
-            //String url = format("http://%s:%s@%s/wd/hub", "EPM-TSTF", WebPropertyReader.instance().key, WebPropertyReader.instance().hub);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }

@@ -9,7 +9,7 @@ public class NativePropertyReader {
 
     private static NativePropertyReader _instance;
     public String app;
-    public String platfoplatformName;
+    public String platformName;
     public String driver;
     public String deviceName;
 
@@ -31,7 +31,7 @@ public class NativePropertyReader {
             property.load(fis);
 
             this.app = property.getProperty("app");
-            this.platfoplatformName = property.getProperty("platfoplatformName");
+            this.platformName = property.getProperty("platformName");
             this.driver = property.getProperty("driver");
             this.deviceName = property.getProperty("deviceName");
         } catch (FileNotFoundException e) {

@@ -1,6 +1,5 @@
 package hw2.scenarios.NativeTest;
 
-import org.openqa.selenium.By;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -8,29 +7,25 @@ import hw2.scenarios.setup.DriverSetup;
 import hw2.scenarios.pageobject.app.ContactManagerApp;
 import hw2.scenarios.pageobject.app.entities.Contact;
 
-import java.io.IOException;
-
 
 public class ContactManagerTest {
 
-    private static final String PACKAGE_NAME = "com.example.android.contactmanager:id/";
-
     @BeforeClass(description = "Initialisation of driver")
-    public void setUp() throws IOException {
+    public void setUp() throws Exception {
         ContactManagerApp.init(DriverSetup.instance().getNativeDriver());
     }
 
     @Test(description = "test to click button")
-    public void tapButtonTest() throws IOException {
-        DriverSetup.instance().getNativeDriver().findElement(By.id(PACKAGE_NAME + "addContactButton")).click();
-        DriverSetup.instance().getNativeDriver().findElement(By.id("contactNameEditText")).sendKeys("Maxim Mescheryakov");
-        DriverSetup.instance().getNativeDriver().findElement(By.id("contactPhoneEditText")).sendKeys("123456789");
-        DriverSetup.instance().getNativeDriver().findElement(By.id("contactEmailEditText")).sendKeys("MaximMescheryakov@mail.ru");
-        DriverSetup.instance().getNativeDriver().findElement(By.id("contactSaveButton")).click();
-        System.out.println("addContactButton is taped");
+    public void tapButtonTest() {
+        ContactManagerApp.homePage.openAddContactForm();
+        ContactManagerApp.addContactPage.setName("Maxim Mescheryakov");
+        ContactManagerApp.addContactPage.setPhone("123456789");
+        ContactManagerApp.addContactPage.setEmail("max@mail.ru");
+        ContactManagerApp.addContactPage.contactSaveButton.click();
+        System.out.println("Contact added");
     }
 
-    @Test(description = "Adding contact via PageObject pattern.")
+    @Test(description = "Adding contact more complex test. Check that contact added")
     public void appTest() {
         ContactManagerApp.homePage.openAddContactForm();
         ContactManagerApp.addContactPage.addContact(Contact.getContact());
@@ -38,7 +33,7 @@ public class ContactManagerTest {
     }
 
     @AfterClass(description = "Quit driver after all test in this class")
-    public void tearDown() throws IOException {
+    public void tearDown() throws Exception {
         DriverSetup.instance().getNativeDriver().quit();
     }
 }

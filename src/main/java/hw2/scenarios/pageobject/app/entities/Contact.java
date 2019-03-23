@@ -20,7 +20,7 @@ public class Contact {
     public static Contact getContact() {
         if (Objects.isNull(contact)) {
             contact = new Contact(
-                    String.format("Veronika%s", Integer.toString(new Random().nextInt())),
+                    String.format("Veronika %s", Integer.toString(new Random().nextInt())),
                     "123-123-123",
                     "qwe@mail.com");
         }

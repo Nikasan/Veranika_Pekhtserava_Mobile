@@ -2,7 +2,7 @@ package hw3.pageobject.app.pages;
 
 import hw3.pageobject.app.entities.Contact;
 import hw3.pageobject.common.BasePage;
-import org.openqa.selenium.WebDriver;
+import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -20,7 +20,7 @@ public class AddContactPage extends BasePage {
     public WebElement contactSaveButton;
 
 
-    public AddContactPage(WebDriver driver) {
+    public AddContactPage(AppiumDriver driver) {
         super(driver);
     }
 

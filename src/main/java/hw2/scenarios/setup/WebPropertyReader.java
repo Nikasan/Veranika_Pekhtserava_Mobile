@@ -9,7 +9,7 @@ public class WebPropertyReader {
 
     private static WebPropertyReader _instance;
     public String sut;
-    public String platfoplatformName;
+    public String platformName;
     public String driver;
     public String deviceName;
     public String browserName;
@@ -32,7 +32,7 @@ public class WebPropertyReader {
             property.load(fis);
 
             this.sut = property.getProperty("sut");
-            this.platfoplatformName = property.getProperty("platfoplatformName");
+            this.platformName = property.getProperty("platformName");
             this.driver = property.getProperty("driver");
             this.deviceName = property.getProperty("deviceName");
             this.browserName = property.getProperty("browserName");

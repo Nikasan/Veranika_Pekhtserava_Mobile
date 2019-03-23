@@ -27,6 +27,7 @@ public class IanaWebTest {
         assertEquals(200, statusCode);
 
         homepage.open();
+
         homepage.checkPageTitle();
         System.out.println("Site opening done");
     }

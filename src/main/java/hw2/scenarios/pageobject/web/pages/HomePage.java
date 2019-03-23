@@ -1,5 +1,6 @@
 package hw2.scenarios.pageobject.web.pages;
 
+import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -14,7 +15,7 @@ public class HomePage extends BasePage {
     @FindBy(id = "intro")
     public WebElement intro;
 
-    public HomePage(WebDriver driver) {
+    public HomePage(AppiumDriver driver) {
         super(driver);
     }
 

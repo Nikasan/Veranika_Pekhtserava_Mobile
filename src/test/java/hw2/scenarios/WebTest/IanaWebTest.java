@@ -18,12 +18,12 @@ public class IanaWebTest {
     private HomePage homepage;
 
     @BeforeClass(description = "Initialisation of driver")
-    public void setUp() throws IOException {
+    public void setUp() throws Exception {
         homepage = new HomePage(DriverSetup.instance().getWebDriver());
     }
 
     @Test(description = "Open website")
-    public void webTest() throws IOException {
+    public void webTest() throws Exception {
         int statusCode;
         statusCode = new HttpResponseCode().httpResponseCodeViaGet("https://www.iana.org/");
         assertEquals(200, statusCode);
@@ -36,7 +36,7 @@ public class IanaWebTest {
     }
 
     @AfterClass(description = "Quit driver after all test in this class")
-    public void tearDown() throws IOException {
+    public void tearDown() throws Exception {
         DriverSetup.instance().getWebDriver().quit();
     }
 }
