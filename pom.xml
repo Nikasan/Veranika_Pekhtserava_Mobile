@@ -27,24 +27,11 @@
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>3.0.2</version>
-                <configuration>
-                    <resources>
-                        <resource>
-                            <directory>src/test/resources</directory>
-                        </resource>
-                    </resources>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.20.1</version>
                 <configuration>
                     <suiteXmlFiles>
-                        <suiteXmlFile>src/test/resources/runners/${runner}</suiteXmlFile>
+                        <suiteXmlFile>src/test/resources/runners/hw3/webTestFarm.xml</suiteXmlFile>
                     </suiteXmlFiles>
                 </configuration>
             </plugin>
@@ -52,7 +39,7 @@
 
         <testResources>
             <testResource>
-                <directory>src/main/resources</directory>
+                <directory>src/test/resources</directory>
                 <filtering>true</filtering>
             </testResource>
         </testResources>
@@ -63,53 +50,6 @@
             </resource>
         </resources>
     </build>
-
-    <profiles>
-        <profile>
-            <id>web</id>
-            <properties>
-                <runner>webApp.xml</runner>
-                <type>web</type>
-            </properties>
-        </profile>
-        <profile>
-            <id>app</id>
-            <properties>
-                <runner>nativeApp.xml</runner>
-                <type>app</type>
-            </properties>
-        </profile>
-        <profile>
-            <id>prod</id>
-            <properties>
-                <domain>https://www.iana.org/</domain>
-            </properties>
-        </profile>
-        <profile>
-            <id>sony</id>
-            <properties>
-                <deviceID>9887f744574b504850</deviceID>
-                <platform>Android</platform>
-                <browser>Chrome</browser>
-            </properties>
-        </profile>
-        <profile>
-            <id>emu</id>
-            <properties>
-                <deviceID>emulator-5554</deviceID>
-                <platform>Android</platform>
-                <browser>Chrome</browser>
-            </properties>
-        </profile>
-        <profile>
-            <id>iOS</id>
-            <properties>
-                <platform>iOS</platform>
-                <browser>Safari</browser>
-            </properties>
-        </profile>
-    </profiles>
-
     <dependencies>
         <dependency>
             <groupId>org.testng</groupId>
@@ -146,7 +86,6 @@
             <artifactId>rest-assured</artifactId>
             <version>3.2.0</version>
         </dependency>
-
     </dependencies>
 
 
