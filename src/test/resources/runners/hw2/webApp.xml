@@ -3,7 +3,7 @@
 <suite name="Web Application tests" verbose="1">
     <test name="Simple web test">
         <classes>
-            <class name="IanaWebTest"/>
+            <class name="hw2.scenarios.WebTest.IanaWebTest"/>
         </classes>
     </test>
 </suite>
