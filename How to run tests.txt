@@ -1,0 +1,35 @@
+HW2:
+Native test:
+1. Set you personal values in nativetest.properties file (device_name, app, driver)
+2.Connect you device to computer/laptop, allow access to phone data
+3.Turn on developer option -> USB debugging
+5.Run local Appium server
+6.Press right button by mouse on runners/hw2/nativeApp.xml Run.  
+or add <suiteXmlFile>src/test/resources/runners/hw2/nativeApp.xml</suiteXmlFile> and run as ussual Maven project
+
+Web test:
+
+1. Set you personal values in webtest.properties file (device_name, platformName,driver,browserName)
+2.Connect you device to computer/laptop, allow access to phone data
+3.Turn on developer option -> USB debugging
+5.Run local Appium server
+6.Press right button by mouse on runners/hw2/webApp.xml and Run.  
+or add <suiteXmlFile>src/test/resources/runners/hw2/webApp.xml</suiteXmlFile> and run as ussual Maven project
+
+For emulators the same steps, but you can face issue with chrome driver version.
+
+HW3:
+Native test:
+1.Set you personal values in src\main\resources\nativefarm.properties (key, hub,udid )
+2.Open mobile farm with appropriate device
+3.Install application
+4.Press right button by mouse on runners/hw3/nativeTestFarm.xml and Run.  
+or add <suiteXmlFile>src/test/resources/ runners/hw3/nativeTestFarm.xml</suiteXmlFile> and run as ussual Maven project
+
+Web test:
+
+1. Set you personal values in \src\main\resources\webfarm.properties file (udid, key,hub)
+2.Open mobile farm with appropriate device
+3.Press right button by mouse on runners/hw3/webTestFarm.xml and Run.  
+or add <suiteXmlFile>src/test/resources/ runners/hw3/webTestFarm.xml</suiteXmlFile> and run as ussual Maven project
+

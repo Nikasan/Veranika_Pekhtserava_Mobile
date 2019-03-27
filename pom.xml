@@ -10,7 +10,6 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <deviceUrl>http://127.0.0.1:4723/wd/hub</deviceUrl>
     </properties>
 
     <build>
