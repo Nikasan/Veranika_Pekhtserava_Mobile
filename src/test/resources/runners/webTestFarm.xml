@@ -2,6 +2,12 @@
 
 <suite name="Web Application tests" verbose="1">
     <test name="Simple web test">
+        <parameter name="property path" value=".\src\main\resources\webfarm.properties"/>
+        <groups>
+            <run>
+                <include name="web"/>
+            </run>
+        </groups>
         <classes>
             <class name="hw3.WebTest.IanaWebTest"/>
         </classes>

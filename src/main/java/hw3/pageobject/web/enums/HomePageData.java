@@ -1,8 +1,8 @@
 package hw3.pageobject.web.enums;
 
-import lombok.AllArgsConstructor;
+import lombok.Getter;
+@Getter
 
-@AllArgsConstructor
 public enum HomePageData {
     INTRO("The global coordination of the DNS Root, IP addressing,\n" +
             "and other Internet protocol resources is performed as the\n" +
@@ -10,6 +10,11 @@ public enum HomePageData {
             "Learn more.");
 
     private String value;
+
+    HomePageData(String value) {
+        this.value = value;
+    }
+
 
     @Override
     public String toString() {

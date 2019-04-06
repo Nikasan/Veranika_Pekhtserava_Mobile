@@ -20,7 +20,7 @@ public class IanaWebTest extends Hooks {
     }
 
     @Test(groups = "web", description = "Open website")
-    public void webTest() throws Exception {
+    public void webTest(){
         int statusCode;
         statusCode = new HttpResponseCode().httpResponseCodeViaGet("https://www.iana.org/");
         assertEquals(200, statusCode);

@@ -1,39 +1,33 @@
 package hw3.WebTest;
 
+import hw3.Hooks;
 import hw3.pageobject.web.pages.HomePage;
-import hw3.setup.DriverSetup;
 import hw3.setup.HttpResponseCode;
-import hw3.setup.WebPropertyReader;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
-
+import static hw3.setup.DriverSetup.SUT;
 import static org.testng.AssertJUnit.assertEquals;
 
-public class IanaWebTest {
+public class IanaWebTest extends Hooks {
     private HomePage homepage;
 
-    @BeforeClass(description = "Initialisation of driver")
-    public void setUp() throws IOException {
-        homepage = new HomePage(DriverSetup.instance().getWebDriver(),DriverSetup.instance().getWait());
+    @BeforeMethod(description = "Initialisation of page")
+    public void setUp(){
+        homepage = new HomePage(driver);
     }
 
-    @Test(description = "Open website")
-    public void webTest() throws IOException {
+    @Test(groups = "web", description = "Open website")
+    public void webTest() {
         int statusCode;
-        statusCode = new HttpResponseCode().httpResponseCodeViaGet(WebPropertyReader.instance().sut);
+        statusCode = new HttpResponseCode().httpResponseCodeViaGet("https://www.iana.org/");
         assertEquals(200, statusCode);
 
         homepage.open();
-
+        wait.until(ExpectedConditions.urlToBe(SUT));
         homepage.checkPageTitle();
         System.out.println("Site opening done");
     }
 
-    @AfterClass(description = "Quit driver after all test in this class")
-    public void tearDown() throws IOException{
-        DriverSetup.instance().getWebDriver().quit();
-    }
 }

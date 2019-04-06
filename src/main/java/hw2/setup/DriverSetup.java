@@ -25,6 +25,7 @@ public class DriverSetup {
     private static String CHDREXECUTABLE;
     public static String SUT;
 
+    //private constructor
     private DriverSetup() {
     }
 
@@ -48,8 +49,10 @@ public class DriverSetup {
     public AppiumDriver getDriver() throws Exception{
         if(driver == null){
             DesiredCapabilities capabilities = new DesiredCapabilities();
+
             capabilities.setCapability(capabilitiesEnums.PLATFORM.value, PLATFORM );
             capabilities.setCapability(capabilitiesEnums.DEVICE.value, DEVICE);
+
             // Setup type of application:
             switch (APP_TYPE) {
                 case "native":

@@ -2,6 +2,13 @@
 
 <suite name="Native Application tests" verbose="1">
     <test name="Simple native test">
+
+    <parameter name="property path" value=".\src\main\resources\nativefarm.properties"/>
+        <groups>
+            <run>
+                <include name="native"/>
+            </run>
+        </groups>
         <classes>
             <class name="hw3.NativeTest.ContactManagerTest"/>
         </classes>

@@ -1,12 +1,16 @@
-package hw2;
+package hw3;
 
-import hw2.setup.DriverSetup;
-import hw2.setup.TestProperties;
+import hw3.setup.DriverSetup;
+
+import hw3.setup.TestProperties;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Parameters;
+import org.testng.annotations.Test;
 
-import static hw2.setup.DriverSetup.setProperties;
+import static hw3.setup.DriverSetup.setProperties;
 
 
 /**
@@ -30,7 +34,7 @@ public class Hooks {
     public void tearDown(){
         // NOTE: Method quit() reboots the device (probably to release it from use so
         // it becomes available for others). To avoid reboot use method closeApp() instead.
-       driver.quit();
+        driver.closeApp();
     }
 
 }

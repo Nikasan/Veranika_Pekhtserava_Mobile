@@ -1,22 +1,29 @@
 package hw3.setup;
 
-import hw3.setup.driver.NativeUtils;
-import hw3.setup.driver.WebUtils;
+import hw3.setup.enums.capabilitiesEnums;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.concurrent.TimeUnit;
 
-import static hw3.setup.enums.capabilitiesEnums.*;
+import static java.lang.String.format;
 
 
 public class DriverSetup {
     private static DriverSetup _instance = null;
-    private AppiumDriver _webDriver = null;
-    private AppiumDriver _nativeDriver = null;
+    private static AppiumDriver driver = null;
+    private static WebDriverWait wait = null;
+
+    private static String PLATFORM;
+    private static String UDID;
+    private static String DRIVER;
+    private static String BROWSER;
+    private static String APP_TYPE;
+    private static String APP_ACTIVITY;
+    private static String APP_PACKAGE;
+    public static String SUT;
 
     private DriverSetup() {
     }
@@ -26,41 +33,48 @@ public class DriverSetup {
         return _instance;
     }
 
-    public AppiumDriver getNativeDriver() throws IOException {
-        if (_nativeDriver == null) {
-            DesiredCapabilities capabilities = new DesiredCapabilities();
-            capabilities.setCapability(PLATFORM_NAME.value, NativePropertyReader.instance().platformName);
-            capabilities.setCapability(UDID.value, NativePropertyReader.instance().udid);
-            capabilities.setCapability(APP_ACTIVITY.value, NativePropertyReader.instance().appActivity);
-            capabilities.setCapability(APP_PACKAGE.value, NativePropertyReader.instance().appPackage);
-//             capabilities.setCapability(APP_LAUNCH.value,NativePropertyReader.instance().autoLaunch);
-//             capabilities.setCapability(APP.value,NativePropertyReader.instance().app);
+    public static void setProperties(TestProperties properties) throws IOException {
 
-            _nativeDriver = new AppiumDriver(NativeUtils.createUrl(), capabilities);
-        }
-        return _nativeDriver;
+        PLATFORM = properties.getPropertyValue(capabilitiesEnums.PLATFORM.value);
+        UDID = properties.getPropertyValue(capabilitiesEnums.UDID.value);
+        APP_ACTIVITY = properties.getPropertyValue(capabilitiesEnums.APP_ACTIVITY.value);
+        APP_PACKAGE = properties.getPropertyValue(capabilitiesEnums.APP_PACKAGE.value);
+        DRIVER = format("http://%s:%s@%s/wd/hub", "EPM-TSTF", properties.getPropertyValue(capabilitiesEnums.API_KEY.value), properties.getPropertyValue(capabilitiesEnums.APPIUM_HUB.value));
+        BROWSER = properties.getPropertyValue(capabilitiesEnums.BROWSER.value);
+        APP_TYPE = properties.getPropertyValue(capabilitiesEnums.APP_TYPE.value);
+        SUT = properties.getPropertyValue(capabilitiesEnums.SUT.value);
     }
 
-    public AppiumDriver getWebDriver() throws IOException {
-        if (_webDriver == null) {
+    public AppiumDriver getDriver() throws Exception{
+        if(driver == null) {
             DesiredCapabilities capabilities = new DesiredCapabilities();
 
-            capabilities.setCapability(PLATFORM_NAME.value, WebPropertyReader.instance().platform);
-            capabilities.setCapability(BROWSER_NAME.value, WebPropertyReader.instance().browser_name);
-            capabilities.setCapability(UDID.value, WebPropertyReader.instance().udid);
+            capabilities.setCapability(capabilitiesEnums.PLATFORM.value, PLATFORM);
+            capabilities.setCapability(capabilitiesEnums.UDID.value, UDID);
 
-            _webDriver = new AppiumDriver(
-                    new URL(WebUtils.createUrl()), capabilities);
+            // Setup type of application:
+            switch (APP_TYPE) {
+                case "native":
+                    capabilities.setCapability(capabilitiesEnums.APP_ACTIVITY.value, APP_ACTIVITY);
+                    capabilities.setCapability(capabilitiesEnums.APP_PACKAGE.value, APP_PACKAGE);
+                    break;
+                case "web":
+                    capabilities.setCapability(capabilitiesEnums.BROWSER.value, BROWSER);
+                    break;
+                default:
+                    throw new Exception("Unknown application type");
+            }
 
-
-            _webDriver.manage().timeouts()
-                    .pageLoadTimeout(2, TimeUnit.MINUTES)
-                    .implicitlyWait(90, TimeUnit.SECONDS);
+            driver = new AppiumDriver(new URL(DRIVER),capabilities);
         }
-        return _webDriver;
+        return driver;
     }
 
-    public WebDriverWait getWait() throws IOException {
-        return new WebDriverWait(getWebDriver(), 5);
+    public WebDriverWait getWait() throws Exception {
+        if (wait == null) {
+            wait = new WebDriverWait(getDriver(), 5);
+        }
+        return wait;
     }
+
 }

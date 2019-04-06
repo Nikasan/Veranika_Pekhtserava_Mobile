@@ -1,23 +1,20 @@
 package hw3.NativeTest;
 
+import hw3.Hooks;
 import hw3.pageobject.app.ContactManagerApp;
 import hw3.pageobject.app.entities.Contact;
-import hw3.setup.DriverSetup;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
 
+public class ContactManagerTest extends Hooks {
 
-public class ContactManagerTest {
-
-    @BeforeClass(description = "Initialisation of driver")
-    public void setUp() throws IOException {
-        ContactManagerApp.init(DriverSetup.instance().getNativeDriver());
+    @BeforeMethod(description = "Initialisation of app")
+    public void setUp() {
+        ContactManagerApp.init(driver);
     }
 
-    @Test(description = "test to click button")
+    @Test(groups = "native",description = "test to click button")
     public void tapButtonTest(){
       ContactManagerApp.homePage.setAddContactButtonClick();
       ContactManagerApp.addContactPage.setName("Maxim Mescheryakov");
@@ -27,15 +24,11 @@ public class ContactManagerTest {
       System.out.println("addContactButton is taped");
     }
 
-    @Test(description = "Adding contact via PageObject pattern.")
+    @Test(groups = "native", description = "Adding contact via PageObject pattern.")
     public void appTest() {
         ContactManagerApp.homePage.openAddContactForm();
         ContactManagerApp.addContactPage.addContact(Contact.getContact());
+        System.out.println(ContactManagerApp.homePage.getAllContacts());
         ContactManagerApp.homePage.checkContact(Contact.getContact());
-    }
-
-    @AfterClass(description = "Quit driver after all test in this class")
-    public void tearDown() throws IOException {
-        DriverSetup.instance().getNativeDriver().quit();
     }
 }

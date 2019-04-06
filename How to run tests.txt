@@ -21,7 +21,7 @@ For emulators the same steps, but you can face issue with chrome driver version.
 HW3:
 Native test:
 1.Set you personal values in src\main\resources\nativefarm.properties (key, hub,udid )
-2.Open mobile farm with appropriate device
+2.Open mobile farm with appropriate device (Application requires google account. Sign in before run test.)
 3.Install application
 4.Press right button by mouse on runners/hw3/nativeTestFarm.xml and Run.  
 or add <suiteXmlFile>src/test/resources/ runners/hw3/nativeTestFarm.xml</suiteXmlFile> and run as ussual Maven project

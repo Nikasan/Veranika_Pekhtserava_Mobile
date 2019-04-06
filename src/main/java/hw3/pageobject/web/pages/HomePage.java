@@ -1,32 +1,32 @@
 package hw3.pageobject.web.pages;
 
-import hw3.setup.WebPropertyReader;
+import hw3.pageobject.common.BasePage;
 import io.appium.java_client.AppiumDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import io.appium.java_client.TouchAction;
+import io.appium.java_client.touch.WaitOptions;
 
-import java.io.IOException;
+import java.time.Duration;
 
+import static hw3.setup.DriverSetup.SUT;
 import static org.testng.AssertJUnit.assertEquals;
 
-public class HomePage  {
-    private AppiumDriver driver;
-    private WebDriverWait driverWait;
+public class HomePage extends BasePage {
+
     private String pageTitle = "Internet Assigned Numbers Authority";
 
-
-    public HomePage(AppiumDriver appiumDriver,WebDriverWait driverWait) {
-        this.driver = appiumDriver;
-        this.driverWait = driverWait;
+    public HomePage(AppiumDriver driver) {
+        super(driver);
     }
 
-    public void open() throws IOException {
-        driver.get(WebPropertyReader.instance().sut);
-        driverWait.until(ExpectedConditions.urlToBe(WebPropertyReader.instance().sut));
+    public void open(){
+        driver.get(SUT);
+        new TouchAction(driver).waitAction(WaitOptions.waitOptions(Duration.ofSeconds(5)));
     }
 
     // Assert Title
     public void checkPageTitle() {
         assertEquals(driver.getTitle(), pageTitle);
     }
+
+
 }
