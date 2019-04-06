@@ -1,7 +1,14 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
 <suite name="Native Application tests" verbose="1">
-    <test name="Native Application contact manager">
+    <parameter name="property path" value=".\src\main\resources\nativetest.properties"/>
+
+    <test name="Native Application contact manager test">
+        <groups>
+            <run>
+                <include name="native"/>
+            </run>
+        </groups>
         <classes>
             <class name="hw2.NativeTest.ContactManagerTest"/>
         </classes>

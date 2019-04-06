@@ -5,7 +5,11 @@ public enum capabilitiesEnums {
     PLATFORM("platformName"),
     DEVICE("deviceName"),
     BROWSER("browserName"),
-    CHDREXECUTABLE("chromedriverExecutable");
+    CHDREXECUTABLE("chromedriverExecutable"),
+    APP_TYPE("app_type"),
+    SUT("sut"),
+    DRIVER("driver");
+
 
     public final String value;
 

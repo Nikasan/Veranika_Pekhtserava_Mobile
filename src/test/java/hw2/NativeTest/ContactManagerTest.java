@@ -1,22 +1,20 @@
 package hw2.NativeTest;
 
+import hw2.Hooks;
 import hw2.pageobject.app.ContactManagerApp;
-
-import hw2.setup.DriverSetup;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
 import hw2.pageobject.app.entities.Contact;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 
-public class ContactManagerTest {
+public class ContactManagerTest extends Hooks {
 
-    @BeforeClass(description = "Initialisation of driver")
-    public void setUp() throws Exception {
-        ContactManagerApp.init(DriverSetup.instance().getNativeDriver());
+    @BeforeMethod(description = "Initialisation of app")
+    public void setUp() {
+        ContactManagerApp.init(driver);
     }
 
-    @Test(description = "test to click button")
+    @Test(groups = "native",description = "test to click button")
     public void tapButtonTest() {
         ContactManagerApp.homePage.openAddContactForm();
         ContactManagerApp.addContactPage.setName("Maxim Mescheryakov");
@@ -31,10 +29,5 @@ public class ContactManagerTest {
         ContactManagerApp.homePage.openAddContactForm();
         ContactManagerApp.addContactPage.addContact(Contact.getContact());
         ContactManagerApp.homePage.checkContact(Contact.getContact());
-    }
-
-    @AfterClass(description = "Quit driver after all test in this class")
-    public void tearDown() throws Exception {
-        DriverSetup.instance().getNativeDriver().quit();
     }
 }

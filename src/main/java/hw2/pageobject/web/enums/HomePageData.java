@@ -1,10 +1,6 @@
 package hw2.pageobject.web.enums;
 
-
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-
 @Getter
 
 public enum HomePageData {

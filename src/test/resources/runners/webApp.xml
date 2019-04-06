@@ -1,7 +1,15 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
 <suite name="Web Application tests" verbose="1">
+    <parameter name="property path" value=".\src\main\resources\webtest.properties"/>
     <test name="Simple web test">
+
+        <groups>
+            <run>
+                <include name="web"/>
+            </run>
+        </groups>
+
         <classes>
             <class name="hw2.WebTest.IanaWebTest"/>
         </classes>

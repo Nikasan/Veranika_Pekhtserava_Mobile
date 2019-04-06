@@ -1,8 +1,5 @@
 package hw2.setup;
 
-import hw2.setup.driver.NativeUtils;
-import hw2.setup.driver.WebUtils;
-import hw2.setup.enums.TestProperties;
 import hw2.setup.enums.capabilitiesEnums;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
@@ -11,14 +8,24 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
-
+import java.io.IOException;
+import java.net.URL;
 
 public class DriverSetup {
     private static DriverSetup _instance = null;
-    private AppiumDriver _webDriver = null;
-    private AppiumDriver _nativeDriver = null;
+    private static AppiumDriver driver = null;
+    private static WebDriverWait wait = null;
 
-    protected DriverSetup() {
+    private static String PLATFORM;
+    private static String DEVICE;
+    private static String APP;
+    private static String DRIVER;
+    private static String BROWSER;
+    private static String APP_TYPE;
+    private static String CHDREXECUTABLE;
+    public static String SUT;
+
+    private DriverSetup() {
     }
 
     public static DriverSetup instance() {
@@ -26,56 +33,58 @@ public class DriverSetup {
         return _instance;
     }
 
-    public AppiumDriver getNativeDriver() throws Exception {
-        if (_nativeDriver == null) {
-            DesiredCapabilities capabilities = new DesiredCapabilities();
-            capabilities.setCapability(capabilitiesEnums.PLATFORM.value, NativePropertyReader.instance().platformName);
-            capabilities.setCapability(capabilitiesEnums.DEVICE.value, NativePropertyReader.instance().deviceName);
-            capabilities.setCapability(capabilitiesEnums.APP.value,  new File(NativePropertyReader.instance().app).getAbsolutePath());
+    public static void setProperties(TestProperties properties) throws IOException {
 
-            switch (NativePropertyReader.instance().platformName) {
-                case "Android":
-                    _nativeDriver = new AndroidDriver(NativeUtils.createUrl(), capabilities);
-                    break;
-                case "iOS":
-                    _nativeDriver = new IOSDriver(NativeUtils.createUrl(), capabilities);
-                    break;
-                default:
-                    throw new Exception("Unknown platform");
-            }
-        }
-        return _nativeDriver;
+        PLATFORM = properties.getPropertyValue(capabilitiesEnums.PLATFORM.value);
+        DEVICE = properties.getPropertyValue(capabilitiesEnums.DEVICE.value);
+        APP =  properties.getPropertyValue(capabilitiesEnums.APP.value);
+        DRIVER = properties.getPropertyValue(capabilitiesEnums.DRIVER.value);
+        BROWSER = properties.getPropertyValue(capabilitiesEnums.BROWSER.value);
+        APP_TYPE = properties.getPropertyValue(capabilitiesEnums.APP_TYPE.value);
+        CHDREXECUTABLE = properties.getPropertyValue(capabilitiesEnums.CHDREXECUTABLE.value);
+        SUT = properties.getPropertyValue(capabilitiesEnums.SUT.value);
     }
 
-
-    public AppiumDriver getWebDriver() throws Exception {
-        if (_webDriver == null) {
+    public AppiumDriver getDriver() throws Exception{
+        if(driver == null){
             DesiredCapabilities capabilities = new DesiredCapabilities();
+            capabilities.setCapability(capabilitiesEnums.PLATFORM.value, PLATFORM );
+            capabilities.setCapability(capabilitiesEnums.DEVICE.value, DEVICE);
+            // Setup type of application:
+            switch (APP_TYPE) {
+                case "native":
+                    capabilities.setCapability(capabilitiesEnums.APP.value, new File(APP).getAbsolutePath() );
+                    break;
+                case "web":
+                    capabilities.setCapability(capabilitiesEnums.BROWSER.value, BROWSER);
 
-            capabilities.setCapability(capabilitiesEnums.PLATFORM.value, WebPropertyReader.instance().platformName);
-            capabilities.setCapability(capabilitiesEnums.DEVICE.value, WebPropertyReader.instance().deviceName);
-            capabilities.setCapability(capabilitiesEnums.BROWSER.value, WebPropertyReader.instance().browserName);
+                    /**chromedriverExecutable capability for emulators only with Android 7.0 and Appium version 1.11.0
+                     * Should be commented for real devise
+                     */
+                    // capabilities.setCapability(capabilitiesEnums.CHDREXECUTABLE.value, CHDREXECUTABLE);
+                    break;
+                default:
+                    throw new Exception("Unknown application type");
+            }
 
-            /**chromedriverExecutable capability for emulators only with Android 7.0 and Appium version 1.11.0
-             * Should be commented for real devise
-             */
-            // capabilities.setCapability(CHDREXECUTABLE.value, WebPropertyReader.instance().chromedriverExecutable);
-
-            switch (WebPropertyReader.instance().platformName) {
+            switch (PLATFORM) {
                 case "Android":
-                    _webDriver = new AndroidDriver(WebUtils.createUrl(), capabilities);
+                    driver = new AndroidDriver(new URL(DRIVER), capabilities);
                     break;
                 case "iOS":
-                    _webDriver = new IOSDriver(WebUtils.createUrl(), capabilities);
+                    driver = new IOSDriver(new URL(DRIVER), capabilities);
                     break;
                 default:
                     throw new Exception("Unknown platform");
             }
         }
-        return _webDriver;
+        return driver;
     }
 
     public WebDriverWait getWait() throws Exception {
-        return new WebDriverWait(getWebDriver(), 5);
+        if (wait == null) {
+            wait = new WebDriverWait(getDriver(), 5);
+        }
+        return wait;
     }
 }
